@@ -48,3 +48,15 @@ nav ul a {
 .modal-content, h4, p {
     color: #000;
 }
+
+.card-content span{
+  font-size: 14px !important;
+}
+
+.max-image {
+  height: 450px;
+}
+span.card-title.activator.grey-text.text-darken-4.max-text {
+    max-height: 4em;
+    overflow: hidden;
+}
