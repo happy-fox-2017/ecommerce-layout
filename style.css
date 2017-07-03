@@ -1,0 +1,19 @@
+.navbar-inverse {
+    background-image: -webkit-linear-gradient(top,#641E16 0,#641E16 100%);
+    background-color: #641E16;
+    border-color: #641E16;
+    margin: 0px;
+}
+
+.navbar {
+  border-radius: 0px;
+}
+
+.carousel-inner > .item > img{
+  /*width:640px;*/
+  height:400px;
+}
+
+.row {
+  margin-top: 30px;
+}
