@@ -1,0 +1,50 @@
+nav {
+  background-color: wheat;
+}
+nav .brand-logo {
+    position: absolute;
+    color: #000;
+    display: inline-block;
+    font-size: 2.1rem;
+    padding: 0;
+    white-space: nowrap;
+}
+nav ul a {
+    transition: background-color .3s;
+    font-size: 1rem;
+    color: #000;
+    display: block;
+    padding: 0 15px;
+    cursor: pointer;
+}
+.tabs.tabs-transparent .tab a.active {
+    color: wheat;
+}
+.tabs.tabs-transparent .tab a:hover, .tabs.tabs-transparent .tab a.active {
+    color: wheat;
+    font-weight: bold;
+}
+.tabs.tabs-transparent {
+    background-color: #fafafa;
+}
+.tabs.tabs-transparent .tab a, .tabs.tabs-transparent .tab.disabled a, .tabs.tabs-transparent .tab.disabled a:hover {
+    color: #000;
+}
+.page-footer {
+    padding-top: 30px;
+    background-color: #3b3b3b;
+}
+.slider .slides li .caption {
+    color: #000;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    opacity: 0;
+}
+.grey-text.text-lighten-3 {
+    color: #000 !important;
+}
+.modal-content, h4, p {
+    color: #000;
+}
