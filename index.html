@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <meta charset="utf-8">
+          <title>Ecommerce</title>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+          <style>
+               .carousel-inner .item img{
+                    height: 450px;
+               }
+               .col-md-3 .thumbnail img {
+                    height: 155px;
+               }
+               #footer {
+                    background-image: url('img/baground-footer.jpg');
+               }
+
+               .badge-notify{
+                 background:red;
+                 position:relative;
+                 top: -12px;
+                 right: 15px;
+               }
+
+          </style>
+
+     </head>
+     <body>
+          <div class="container">
+               <nav class="navbar navbar-default navbar-fixed-top"  >
+                  <div class="container">
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="index.html">E-Commerce</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+
+                        <li class="dropdown">
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kategory
+                          <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Handphone</a></li>
+                            <li><a href="#">Camera</a></li>
+                            <li><a href="#">Laptop</a></li>
+                          </ul>
+                        </li>
+
+                      </ul>
+                      <form class="navbar-form navbar-left" action="#" >
+                        <div class="form-group" width="100%" height="25px" >
+                          <input type="text" class="form-control" name="key" placeholder="Search" size="70%" >
+                          <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                          </button>
+                        </div>
+                      </form>
+
+
+                      <ul class="nav navbar-nav navbar-right">
+                       <li><a href="register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                       <li><a href="register.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                       <li>
+                             <h4>
+                               <div style="float: right; cursor: pointer;">
+                                 <span class="glyphicon glyphicon-shopping-cart my-cart-icon"><span class="badge badge-notify my-cart-badge"></span></span>
+                               </div>
+                              </h4>
+                       </li>
+                     </ul>
+
+                    </div><!-- /.navbar-collapse -->
+                  </div><!-- /.container-fluid -->
+               </nav>
+               <br>
+               <br>
+               <br>
+               <br>
+
+               <!-- Carousel Example -->
+               <div class="row">
+                    <div class="col-md-9" >
+                           <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                             <!-- Indicators -->
+                             <ol class="carousel-indicators">
+                               <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                               <li data-target="#myCarousel" data-slide-to="1"></li>
+                               <li data-target="#myCarousel" data-slide-to="2"></li>
+                             </ol>
+
+                             <!-- Wrapper for slides -->
+                             <div class="carousel-inner">
+                               <div class="item active">
+                                 <img src="img/bhineka1.jpg" alt="Los Angeles" height="800px">
+                               </div>
+
+                               <div class="item">
+                                 <img src="img/acerid-2.png" alt="Chicago" >
+                               </div>
+
+                               <div class="item">
+                                 <img src="img/acerid-3.png" alt="New york" >
+                               </div>
+                             </div>
+
+                             <!-- Left and right controls -->
+                             <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                               <span class="glyphicon glyphicon-chevron-left"></span>
+                               <span class="sr-only">Previous</span>
+                             </a>
+                             <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                               <span class="glyphicon glyphicon-chevron-right"></span>
+                               <span class="sr-only">Next</span>
+                             </a>
+                           </div>
+
+                    </div>
+
+                    <!-- Col right bar -->
+                    <div class="col-md-3">
+                         <div class="thumbnail">
+                          <a href="/index.html" target="_blank">
+                            <img src="img/samsung1.jpg" alt="Lights" style="width:100%">
+                            <div class="caption">
+                              <p align="center">New Item</p>
+                            </div>
+                          </a>
+                        </div>
+
+                        <div class="thumbnail">
+                        <a href="/index.html" target="_blank">
+                          <img src="img/samsung2.jpg" alt="Lights" style="width:100%">
+                          <div class="caption">
+                             <p align="center">New Product</p>
+                          </div>
+                        </a>
+                      </div>
+
+                    </div>
+
+               </div>
+                 <!-- End of Carousel -->
+
+                 <br>
+                 <br>
+               <!-- thumbnail -->
+               <div class="row">
+                 <div class="col-sm-6 col-md-4">
+                   <div class="thumbnail">
+                     <img src="img/img_1.png" alt="...">
+                     <div class="caption">
+                       <h3 align="center">product 1 - <strong>$10</strong></h3>
+                       <p>Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf. Ia tidak hanya bertahan selama 5 abad, tapi juga telah beralih ke penataan huruf elektronik, tanpa ada perubahan apapun.</p>
+                       <button class="btn btn-danger my-cart-btn" data-id="1" data-name="product 1" data-summary="summary 1" data-price="10" data-quantity="1" data-image="img/img_1.png">Add to Cart</button>
+                     </div>
+                   </div>
+                 </div>
+                 <div class="col-sm-6 col-md-4">
+                   <div class="thumbnail">
+                    <img src="img/img_2.png" alt="...">
+                    <div class="caption">
+                       <h3 align="center">product 2 - <strong>$20</strong></h3>
+                       <p>Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf. Ia tidak hanya bertahan selama 5 abad, tapi juga telah beralih ke penataan huruf elektronik, tanpa ada perubahan apapun.</p>
+                       <button class="btn btn-danger my-cart-btn" data-id="2" data-name="product 2" data-summary="summary 2" data-price="20" data-quantity="1" data-image="img/img_2.png">Add to Cart</button>
+                    </div>
+                   </div>
+                 </div>
+                 <div class="col-sm-6 col-md-4">
+                   <div class="thumbnail">
+                    <img src="img/img_3.png" alt="...">
+                    <div class="caption">
+                       <h3 align="center">product 3 - <strong>$30</strong></h3>
+                       <p>Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf. Ia tidak hanya bertahan selama 5 abad, tapi juga telah beralih ke penataan huruf elektronik, tanpa ada perubahan apapun.</p>
+                       <button class="btn btn-danger my-cart-btn" data-id="3" data-name="product 3" data-summary="summary 3" data-price="30" data-quantity="1" data-image="img/img_3.png">Add to Cart</button>
+                    </div>
+                   </div>
+                 </div>
+            </div>
+            <!-- End off thumbnail -->
+
+            <!-- Footer -->
+            <div id="footer">
+               <div class="container">
+                    <div class="row">
+                        <h3 class="footertext">About Us:</h3>
+                        <br>
+                         <div class="col-md-4">
+                            <center>
+                              <img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains">
+                              <br>
+                              <h4 class="footertext">Programmer</h4>
+                              <p class="footertext">You can thank all the crazy programming here to this guy.<br>
+                            </center>
+                         </div>
+                         <div class="col-md-4">
+                            <center>
+                              <img src="http://oi60.tinypic.com/2z7enpc.jpg" class="img-circle" alt="...">
+                              <br>
+                              <h4 class="footertext">Artist</h4>
+                              <p class="footertext">All the images here are hand drawn by this man.<br>
+                            </center>
+                         </div>
+                         <div class="col-md-4">
+                            <center>
+                              <img src="http://oi61.tinypic.com/307n6ux.jpg" class="img-circle" alt="...">
+                              <br>
+                              <h4 class="footertext">Designer</h4>
+                              <p class="footertext">This pretty site and the copy it holds are all thanks to this guy.<br>
+                            </center>
+                         </div>
+                        </div>
+                        <div class="row">
+                        <p><center><a href="#">Contact Stuff Here</a> <p class="footertext">Copyright 2014</p></center></p>
+                    </div>
+               </div>
+          </div>  <!-- End of Footer -->
+
+
+       </div>
+
+       <script src="js/jquery-2.2.3.min.js"></script>
+       <script type='text/javascript' src="js/bootstrap.min.js"></script>
+       <script type='text/javascript' src="js/jquery.mycart.js"></script>
+
+     <script type="text/javascript">
+          $( document ).ready(function() {
+
+               var goToCartIcon = function($addTocartBtn){
+                 var $cartIcon = $(".my-cart-icon");
+                 var $image = $('<img width="30px" height="30px" src="' + $addTocartBtn.data("image") + '"/>').css({"position": "fixed", "z-index": "999"});
+                 $addTocartBtn.prepend($image);
+                 var position = $cartIcon.position();
+                 $image.animate({
+                   top: position.top,
+                   left: position.left
+              }, 2000 , "linear", function() {
+                   $image.remove();
+                 });
+               }
+
+
+               $('.my-cart-btn').myCart({
+                 currencySymbol: '$',
+                 classCartIcon: 'my-cart-icon',
+                 classCartBadge: 'my-cart-badge',
+                 classProductQuantity: 'my-product-quantity',
+                 classProductRemove: 'my-product-remove',
+                 classCheckoutCart: 'my-cart-checkout',
+                 affixCartIcon: true,
+                 showCheckoutModal: true,
+                 numberOfDecimals: 2,
+                 cartItems: [
+                   {id: 1, name: 'product 1', summary: 'summary 1', price: 10, quantity: 1, image: 'img/img_1.png'},
+                   {id: 2, name: 'product 2', summary: 'summary 2', price: 20, quantity: 1, image: 'img/img_2.png'},
+                   {id: 3, name: 'product 3', summary: 'summary 3', price: 30, quantity: 1, image: 'img/img_3.png'}
+                 ],
+                 clickOnAddToCart: function($addTocart){
+                   goToCartIcon($addTocart);
+                 },
+                 afterAddOnCart: function(products, totalPrice, totalQuantity) {
+                   console.log("afterAddOnCart", products, totalPrice, totalQuantity);
+                 },
+                 clickOnCartIcon: function($cartIcon, products, totalPrice, totalQuantity) {
+                   console.log("cart icon clicked", $cartIcon, products, totalPrice, totalQuantity);
+                 },
+                 checkoutCart: function(products, totalPrice, totalQuantity) {
+                   var checkoutString = "Total Price: " + totalPrice + "\nTotal Quantity: " + totalQuantity;
+                   checkoutString += "\n\n id \t name \t summary \t price \t quantity \t image path";
+                   $.each(products, function(){
+                     checkoutString += ("\n " + this.id + " \t " + this.name + " \t " + this.summary + " \t " + this.price + " \t " + this.quantity + " \t " + this.image);
+                   });
+                   alert(checkoutString)
+                   console.log("checking out", products, totalPrice, totalQuantity);
+                 },
+                 getDiscountPrice: function(products, totalPrice, totalQuantity) {
+                   console.log("calculating discount", products, totalPrice, totalQuantity);
+                   return totalPrice * 0.05;
+                 }
+               });
+
+
+          });
+     </script>
+
+     </body>
+</html>
+<!-- http://www.jqueryscript.net/demo/Simple-Shopping-Cart-Plugin-With-jQuery-Bootstrap-mycart/ -->
