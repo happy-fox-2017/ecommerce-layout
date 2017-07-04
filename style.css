@@ -32,3 +32,18 @@
     bottom: 50px;
     position: 50%
 }
+
+.container {
+    margin-left:  10px;
+    margin-right: 10px;
+}
+
+#footer {
+  background-color: #641E16;
+}
+
+#copyright{
+  margin-left: 10px;
+  margin-bottom: 20px;
+  color: ivory;
+}
