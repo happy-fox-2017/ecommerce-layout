@@ -1,0 +1,124 @@
+nav {
+  background-color: wheat;
+}
+nav .brand-logo {
+    position: absolute;
+    color: #000;
+    display: inline-block;
+    font-size: 2.1rem;
+    padding: 0;
+    white-space: nowrap;
+}
+nav ul a {
+    transition: background-color .3s;
+    font-size: 1rem;
+    color: #000;
+    display: block;
+    padding: 0 15px;
+    cursor: pointer;
+}
+.tabs.tabs-transparent .tab a.active {
+    color: wheat;
+}
+.tabs.tabs-transparent .tab a:hover, .tabs.tabs-transparent .tab a.active {
+    color: wheat;
+    font-weight: bold;
+}
+.tabs.tabs-transparent {
+    background-color: #fafafa;
+}
+.tabs.tabs-transparent .tab a, .tabs.tabs-transparent .tab.disabled a, .tabs.tabs-transparent .tab.disabled a:hover {
+    color: #000;
+}
+.page-footer {
+    padding-top: 30px;
+    background-color: #3b3b3b;
+}
+.slider .slides li .caption {
+    color: #000;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    opacity: 0;
+}
+.grey-text.text-lighten-3 {
+    color: #000 !important;
+}
+.modal-content, h4, p {
+    color: #000;
+}
+
+.card-content span{
+  font-size: 14px !important;
+}
+
+.max-image {
+  height: 450px;
+}
+span.card-title.activator.grey-text.text-darken-4.max-text {
+    max-height: 4em;
+    overflow: hidden;
+}
+.body-form {
+  background-color: wheat;
+}
+.row .col.s4 {
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+a.waves-effect.waves-light.btn {
+    width: 50px;
+    text-align: center;
+}
+.btn, .btn-large, .btn-flat {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0;
+    margin-top: 5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+.card .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    /*min-height: 320px;*/
+}
+
+.content-card .card .card-image {
+  /*display: block;*/
+  /*border-radius: 2px 2px 0 0;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  display: block;
+  margin: auto;
+  width: 50%;
+  height: 150px;*/
+}
+
+.card.max-image .card-image img {
+  display: block;
+  border-radius: 2px 2px 0 0;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 320px;
+}
