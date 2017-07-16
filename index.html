@@ -44,11 +44,48 @@
         <div id="modal1" class="modal modal-fixed-footer">
           <div class="modal-content">
             <h4>Kerangjang Belanja Anda</h4>
-            <p>barang 1</p>
+            <hr>
+            <table>
+              <!-- <thead> -->
+                <tr>
+                  <th>Gambar</th>
+                  <th>Nama Barang</th>
+                  <th>Harga</th>
+                  <th>QTY</th>
+                  <th>Total</th>
+                </tr>
+              <!-- </thead> -->
+              <!-- <tbody > -->
+                <tr v-for="cart in carts">
+                  <!-- <td><img class="img-in-table" v-bind:src="cart.gambar" alt=""></td>
+                  <td>{{ cart.nama }}</td>
+                  <td>{{ cart.harga}}</td>
+                  <td><input type="text" name="" v-model:value="cart.count"></td> -->
+                  <input type="hidden" name="" v-model:value="cart.count">
+                              <td><img class="img-in-table" v-bind:src="cart.gambar"   alt=""></td>
+                              <td>{{ cart.nama }}</td>
+                              <td>{{ cart.harga }}</td>
+                              <td><input v-on:keyup="calculate()" v-model="cart.count" v-bind:max="cart.stok" type="text" ></td>
+                              <!-- <td>{{ total }}</td> -->
+                              <td>{{ countSubTotal(cart.count, cart.harga) }}</td>
+
+
+
+                  <!-- <td></td> -->
+                </tr>
+                <tr>
+                </tr>
+              <!-- </tbody> -->
+              <div class="col s12">
+                <td>Grand Total: <h4><b>Rp. {{ total }}</b></h4></td>
+              </div>
+            </table>
           </div>
           <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Checkout</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+            <a class="modal-action modal-close waves-effect waves-light btn">CHECKOUT</a>
+            <a class="modal-action modal-close waves-effect waves-light btn">CLOSE</a>
+            <!-- <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Checkout</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a> -->
 
           </div>
         </div>
@@ -84,7 +121,7 @@
                             <h5><b>Rp. {{ item.harga }}</b></h5>
                           </div>
                           <div class="col s4">
-                            <a class="waves-effect waves-light btn pulse">Buy</a>
+                            <a class="waves-effect waves-light btn pulse" @click="addToCart(item)">Buy</a>
                           </div>
                         </div>
                       </div>
@@ -99,7 +136,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
 
       <div class="container">
@@ -210,32 +247,6 @@
             </li>
           </ul>
         </div>
-          <!-- <div class="col s12">
-            <div class="carousel carousel-slider center" data-indicators="true">
-              <div class="carousel-fixed-item center">
-                <a class="btn waves-effect white grey-text darken-text-2" >button</a>
-              </div>
-              <div class="carousel-item red white-text" href="#one!">
-                <h2>First Panel</h2>
-                <p class="white-text">This is your first panel</p>
-                <img class="materialboxed" width="650" src="https://fabeliomedia.imgix.net/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/2/_/2.-sq-side_4.jpg">
-
-                <img src="https://fabeliomedia.imgix.net/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/2/_/2.-sq-side_4.jpg" alt="">
-              </div>
-              <div class="carousel-item amber white-text" href="#two!">
-                <h2>Second Panel</h2>
-                <p class="white-text">This is your second panel</p>
-              </div>
-              <div class="carousel-item green white-text" href="#three!">
-                <h2>Third Panel</h2>
-                <p class="white-text">This is your third panel</p>
-              </div>
-              <div class="carousel-item blue white-text" href="#four!">
-                <h2>Fourth Panel</h2>
-                <p class="white-text">This is your fourth panel</p>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -271,8 +282,10 @@
         el: '#app',
         data: {
           items: [],
+          carts: [],
           nama: '',
           harga: '',
+          total: 0
         },
         created: function () {
           this.getItem()
@@ -291,6 +304,41 @@
           },
           postBarang: function () {
 
+          },
+          addToCart: function(item) {
+            var carts = this.carts
+            let data = 0
+            if(item.stok > 0) {
+              for (let i = 0; i < carts.length; i++) {
+                if(carts[i]._id == item._id) {
+                  data++
+                  var index = i
+                }
+              }
+            }
+            if (data == 0) {
+              item.count = 1;
+              item.stok--;
+              carts.push(item);
+            } else {
+              carts[index].count++;
+              carts[index].stok--;
+              carts[index] = item;
+            }
+            console.log(carts);
+          },
+          countSubTotal: function(harga, count) {
+            return harga * count
+          },
+          calculate: function() {
+            var total=0
+            this.carts.forEach(item => {
+              total += (item.count * item.harga)
+              console.log('ini teksnya dibawah');
+              console.log(total);
+              this.total = total
+            })
+            app.total = total
           }
         }
       })
@@ -315,6 +363,21 @@
         $('.modal').modal();
         $('#modal1').modal('open');
         $('#modal1').modal('close');
+        $('.modal').modal({
+           dismissible: true, // Modal can be dismissed by clicking outside of the modal
+           opacity: .5, // Opacity of modal background
+           inDuration: 300, // Transition in duration
+           outDuration: 200, // Transition out duration
+           startingTop: '4%', // Starting top style attribute
+           endingTop: '10%', // Ending top style attribute
+          //  ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+          //    alert("Ready");
+          //    console.log(modal, trigger);
+          //  },
+          //  complete: function() { alert('Closed'); } // Callback for Modal close
+         }
+       );
+
       })
 
     </script>
