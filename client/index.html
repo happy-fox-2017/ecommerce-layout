@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RESIDU KOPI</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
+  </head>
+
+  <body>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <div id="app">
+      <nav class="nav" style="border-bottom: solid #a3a3a3 1px; position: fixed; width: 100%;">
+        <div class="nav-left">
+          <a class="nav-item">
+            <img src="logoResidu.png" alt="Residu logo">
+          </a>
+          <a class="nav-item" v-if="isLogin == true">
+            Hello, {{ currUser }}
+          </a>
+        </div>
+
+        <div class="nav-center">
+          <div class="nav-item">
+            <p class="control has-icons-right">
+              <input class="input" type="text" placeholder="Search.." v-model="searchValue" v-on:keyup="searchBox()">
+              <span class="icon is-small is-right">
+                <i class="fa fa-search"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="nav-right nav-menu" v-if="isLogin == false">
+          <a class="nav-item" v-on:click="getItem()">
+            Home
+          </a>
+          <a class="nav-item" v-on:click="openModalCategory()">
+            Category
+          </a>
+          <a class="nav-item" v-on:click="showModalSignUp()">
+            Create Account
+          </a>
+          <a class="nav-item" v-on:click="showModalLogin()">
+            Log In
+          </a>
+        </div>
+        <div class="nav-right nav-menu" v-else-if="isLogin == true">
+          <a class="nav-item" v-on:click="getItem()">
+            Home
+          </a>
+          <a class="nav-item" v-on:click="openModalCategory()">
+            Category
+          </a>
+          <a class="nav-item" @click="openModalCart()">
+            <span class="icon is-small is-right">
+              <i class="fa fa-shopping-cart"></i>
+            </span>
+          </a>
+          <a class="nav-item" v-on:click="logoutGoGo()">
+            Log Out
+          </a>
+        </div>
+      </nav>
+      <div v-bind:class="modalCategory">
+        <div class="modal-background" v-on:click="closeModalCategory()"></div>
+        <div class="modal-card" style="width: 25%">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Category</p>
+            <button class="delete" v-on:click="closeModalCategory()"></button>
+          </header>
+          <section class="modal-card-body">
+            <a class="tag is-info is-large" v-on:click='searchByCategory("biji"), closeModalCategory()'>biji</a>
+            <a class="tag is-success is-large" v-on:click='searchByCategory("mesin"), closeModalCategory()'>mesin</a>
+            <a class="tag is-danger is-large" v-on:click='searchByCategory("kopi"), closeModalCategory()'>kopi</a>
+            <a class="tag is-primary is-large" v-on:click='searchByCategory("maker"), closeModalCategory()'>maker</a>
+            <a class="tag is-warning is-large" v-on:click='searchByCategory("manual"), closeModalCategory()'>manual</a>
+          </section>
+          <!-- Any other Bulma elements you want -->
+        </div>
+        <button class="modal-close is-large" v-on:click="closeModalLogin()"></button>
+      </div>
+      <div v-bind:class="modalLogin">
+        <div class="modal-background" v-on:click="closeModalLogin()"></div>
+        <div class="modal-card" style="width: 25%">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Log In</p>
+            <button class="delete" v-on:click="closeModalLogin()"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Username</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Username" v-model="login.username">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <p class="control">
+                <input class="input" type="password" placeholder="Password" v-model="login.password" v-on:keyup.enter="logInGoGo()">
+              </p>
+            </div>
+            <div class="field">
+              <p class="control" style="color: red;">
+                {{ login.alert }}
+              </p>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success" v-on:click="logInGoGo()">Log In</a>
+            <a class="button" v-on:click="closeModalLogin()">Cancel</a>
+          </footer>
+          <!-- Any other Bulma elements you want -->
+        </div>
+        <button class="modal-close is-large" v-on:click="closeModalLogin()"></button>
+      </div>
+      <div v-bind:class="modalSignUp">
+        <div class="modal-background" v-on:click="closeModalSignUp()"></div>
+        <div class="modal-card" style="width: 25%">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Create New Account</p>
+            <button class="delete" v-on:click="closeModalSignUp()"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Firstname</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Firstname" v-model="signUp.firstname">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Lastname</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Lastname" v-model="signUp.lastname">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Username</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Username" v-model="signUp.username">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <p class="control">
+                <input class="input" type="password" placeholder="Password" v-model="signUp.password">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Email</label>
+              <p class="control">
+                <input class="input" type="email" placeholder="email" v-model="signUp.email">
+              </p>
+            </div>
+            <div class="field">
+              <p class="control" style="color: red">
+                {{ signUp.alert }}
+              </p>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success" v-on:click="signUpGoGo()">Sign Up</a>
+            <a class="button" v-on:click="closeModalSignUp()">Cancel</a>
+          </footer>
+        </div>
+      </div>
+
+      <div v-bind:class="modalCart">
+        <div class="modal-background" v-on:click="closeModalCart()"></div>
+        <div class="modal-card" style="width: 50%">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Your Cart</p>
+            <button class="delete" v-on:click="closeModalCart()"></button>
+          </header>
+          <div v-if="cartItem.length == 0">
+          <section class="modal-card-body">
+              <p class="title is-6">Your cart is still empty</p>
+              <br>
+              <br>
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success" v-on:click="closeModalCart()">Keep Shopping</a>
+          </footer>
+          </div>
+
+          <div  v-else>
+          <section class="modal-card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nama Item</th>
+                  <th></th>
+                  <th>Harga</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <th></th>
+                  <th><span>Rp. {{ totalHarga }}.000,-</span></th>
+                </tr>
+              </tfoot>
+              <tbody v-for="item in cartItem">
+                <td>{{ item.nama }}</td>
+                <td><a @click="removeFromCart(item)"><i class="fa fa-close"></i></a></td>
+                <td>Rp. {{ item.harga }}</td>
+                <!-- <td><i class="fa fa-plus-circle"></i></td>
+                <td><span>1</span></td>
+                <td><i class="fa fa-minus-circle"></i></td>
+                <td>***</td> -->
+              </tbody>
+            </table>
+
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success" v-on:click="closeModalCart()">Keep Shopping</a>
+            <a class="button" v-on:click="logInGoGo()">Proceed to Payment</a>
+          </footer>
+          </div>
+          <!-- Any other Bulma elements you want -->
+        </div>
+        <button class="modal-close is-large" v-on:click="closeModalCart()"></button>
+      </div>
+
+      <div class="columns is-multiline is-mobile" style="width: 75%; margin: auto; position: relative; top: 60px">
+        <p class="title is-4"> {{cannotFind}} </p>
+        <div class="column is-one-quarter" v-for="prod in productList">
+          <div class="card" style="">
+            <div class="card-image">
+              <figure class="image" style="max-height: 214px; overflow-y: hidden;">
+                <img v-bind:src="prod.img" alt="Image">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p class="title is-4">{{ prod.nama }}</p>
+                  <p class="subtitle is-6">Rp. {{ prod.harga }}</p>
+                  <small v-if="isLogin == true" href="#" class="button is-primary" style="background-color: #4286f4" @click="addToCart(prod)">Add to Cart</small>
+                  <small v-else-if="isLogin == false" href="#" class="button is-primary" style="background-color: #4286f4" v-on:click="showModalLogin()">Login to Shop</small>
+                  <p> stok: {{ prod.stok }} </p>
+                </div>
+              </div>
+
+              <div class="content">
+                {{prod.desk}}
+                <br>
+                <div v-for="tag in prod.tag" style="display: inline">
+                  <a class="tag is-dark" v-on:click="searchByCategory(tag)">
+                    {{ tag }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          isLogin: false,
+          currUser: "",
+          modalLogin: "modal",
+          productList: [],
+          login: {
+            username: "",
+            password: "",
+            alert: ""
+          },
+          modalSignUp: "modal",
+          signUp: {
+            firstname: "",
+            lastname: "",
+            username: "",
+            password: "",
+            email: "",
+            alert: ""
+          },
+          searchValue: "",
+          cannotFind: "",
+          modalCategory: "modal",
+          modalCart: "modal",
+          cartItem: [],
+          totalHarga: 0
+        },
+        methods: {
+          getItem: function() {
+            let self = this;
+            axios.get("http://localhost:3000/product")
+            .then(function (response) {
+              self.productList = response.data;
+              self.cannotFind = ""
+              self.searchValue = ""
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          },
+          showModalLogin: function() {
+            this.modalLogin = "modal is-active"
+          },
+          closeModalLogin: function() {
+            this.modalLogin = "modal";
+            this.login.username = ""
+            this.login.password = ""
+          },
+          showModalSignUp: function() {
+            this.modalSignUp = "modal is-active"
+          },
+          closeModalSignUp: function() {
+            this.modalSignUp = "modal"
+            this.signUp = {
+              firstname: "",
+              lastname: "",
+              username: "",
+              password: "",
+              email: "",
+              alert: ""
+            }
+          },
+          signUpGoGo: function() {
+            let self = this;
+            if (self.signUp.firstname == "") {
+              self.signUp.alert = "Firstname tidak boleh kosong"
+            } else if (self.signUp.lastname == "") {
+              self.signUp.alert = "Lastname tidak boleh kosong"
+            } else if (self.signUp.username == "") {
+              self.signUp.alert = "Username tidak boleh kosong"
+            } else if (self.signUp.password == "") {
+              self.signUp.alert = "Password tidak boleh kosong"
+            } else if (self.signUp.email == "") {
+              self.signUp.alert = "Email tidak boleh kosong"
+            } else {
+              axios.post("http://localhost:3000/signup", self.signUp)
+              .then(function(response) {
+                console.log(response);
+                if (response.data.code == 11000) {
+                  self.signUp.alert = "Username or Email already exist"
+                } else {
+                  alert(response.data.username + " berhasil di buat!, silahkan login")
+                  self.modalSignUp = "modal"
+                }
+              })
+              .catch(function(error) {
+                console.log(error);
+              })
+            }
+          },
+          logInGoGo: function() {
+            let self = this;
+            if (self.login.username == "") {
+              self.login.alert = "usernamenya isi dlu dnk"
+            } else if (self.login.password == "") {
+              self.login.alert = "passwordnya isi dlu dnk"
+            } else {
+              axios.post("http://localhost:3000/login", self.login)
+              .then(function(response) {
+                console.log(response);
+                if (response.data == "usernameFail") {
+                  self.login.alert = "Username not exist!"
+                } else if (response.data == "passFail") {
+                  self.login.alert = "Wrong Password!"
+                } else {
+                  localStorage.setItem("token", response.data)
+                  self.isLogin = true
+                  self.currUser = self.login.username
+                  self.login = {
+                    username: "",
+                    password: ""
+                  }
+                  self.modalLogin = "modal"
+                }
+              })
+              .catch(function(error) {
+                console.log(error);
+              })
+            }
+          },
+          checkLogin: function() {
+            if (!localStorage.token) {
+              this.isLogin = false
+            } else {
+              let self = this
+              axios.post("http://localhost:3000/get-username-from-login", localStorage)
+              .then(function(response) {
+                console.log(response);
+                if (response.data.message == "invalid token") {
+                  self.isLogin = false
+                } else {
+                  self.isLogin = true
+                  self.currUser = response.data.username
+                }
+              })
+              .catch(function(error) {
+                console.log(error);
+              })
+            }
+          },
+          logoutGoGo: function() {
+            localStorage.clear()
+            this.isLogin = false
+            this.currUser = ""
+          },
+          searchByCategory: function(keyword) {
+            let self = this
+            axios.get(`http://localhost:3000/product/${keyword}`)
+            .then(function(response) {
+              if (response.data.length > 0) {
+                self.productList = response.data;
+              } else {
+                self.productList = [],
+                self.cannotFind = "Ooops, seems we can't find what you're looking..."
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          },
+          searchBox: function() {
+            console.log(`http://localhost:3000/product/search/${this.searchValue}`);
+            if (this.searchValue == "") {
+              this.getItem()
+            } else {
+              let self= this
+              axios.get(`http://localhost:3000/product/search/${self.searchValue}`)
+
+              .then(function(response) {
+                if (response.data.length > 0) {
+                  self.productList = response.data
+                  self.cannotFind = ""
+                } else {
+                  self.productList = [],
+                  self.cannotFind = "Ooops, seems we can't find what you're looking..."
+                }
+              })
+              .catch(function(error) {
+                console.log(error);
+              })
+            }
+          },
+          openModalCategory: function() {
+            this.modalCategory = "modal is-active"
+          },
+          closeModalCategory: function() {
+            this.modalCategory = "modal";
+          },
+          openModalCart: function() {
+            this.modalCart = "modal is-active"
+          },
+          closeModalCart: function() {
+            this.modalCart = "modal"
+          },
+          addToCart: function(item) {
+            this.cartItem.push(item)
+            this.totalHarga += parseInt(item.harga)
+            this.openModalCart()
+          },
+          removeFromCart: function(item) {
+            let indexnya = this.cartItem.indexOf(item)
+            this.cartItem.splice(indexnya, 1)
+            this.totalHarga -= parseInt(item.harga)
+          }
+
+        },
+        created: function() {
+          this.getItem()
+          this.checkLogin()
+        }
+      })
+    </script>
+  </body>
+</html>
