@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Kue Shop</title>
+
+  <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/footer.css" rel="stylesheet">
+</head>
+
+<body>
+  <div  id="app">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid" style="background:rgb(56, 223, 108)">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="#">Gadanta.com</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">NEW ARRIVALS</a></li>
+            <li><a href="#">SALE</a></li>
+            <li><a href="#">DISTRIBUTION</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CATEGORY <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <a href="#" class="list-group-item">Kue Basah</a>
+                <a href="#" class="list-group-item">Kudapan</a>
+                <a href="#" class="list-group-item">Hantaran</a>
+                <a href="#" class="list-group-item">Camilan</a>
+                <a href="#" class="list-group-item">Kue Kering</a>
+                <a href="#" class="list-group-item">Bolu & Mini Cake</a>
+                <a href="#" class="list-group-item">Aneka Roti</a>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><button @click="showCart = !showCart" v-show="!verified">
+              {{ items.length + (items.length > 1 || items.length === 0 ? " items" : " item") }}
+            </button></li>
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i>LOGIN</a></li>
+          </ul>
+        </div>
+        <div class="cart" v-show="showCart">
+    <div v-show="items.length > 0">
+      <ul>
+        <li v-for="item in items" transition="fade">
+          <p><strong>{{ item.quantity }}</strong> - {{ item.name }} <i class="fa fa-trash" @click="removeFromCart(item)"></i></p>
+        </li>
+      </ul>
+      <div><button @click="verified = true, showCart = false">Check out</button></div>
+    </div>
+    <div v-show="items.length === 0">
+      <p>Your cart is empty!</p>
+    </div>
+    <div class="checkout" v-show="verified">
+      <h3>Your Cart</h3>
+      <h5 v-for="item in items"><strong>{{ item.quantity }}</strong> - {{ item.name }}<span>${{ item.price * item.quantity }}</span></h5>
+      <hr />
+    </div>
+  </div>
+      </nav>
+    <!-- div carousel -->
+    <div class="">
+      <form >
+        <label for="">Name</label>
+        <input type="text" v-model="name">
+        <label for="">Description</label>
+        <input type="text" v-model="description">
+        <label for="">Price</label>
+        <input type="text" v-model="price">
+        <label for="">Category</label>
+        <input type="text" v-model="category">
+        <label for="">Image</label>
+        <input type="text" v-model="image">
+        <button v-on:click="addItem">Update Item</button>
+      </form>
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="img/kue1.jpg" alt="" style="width:100%">
+      </div>
+
+      <div class="item">
+        <img src="img/kue2.jpg" alt="" style="width:100%">
+      </div>
+
+      <div class="item">
+        <img src="img/kue4.jpg" alt="" style="width:100%">
+      </div>
+      <!--end div carousel-->
+    </div>
+  </div>
+    <hr />
+    <!-- div all product-->
+    <div class="row">
+      <div class="col-sm-4 col-md-3">
+        <div class="list-group">
+          <h3>Categories</h3>
+          <a href="#" class="list-group-item">Kue Basah</a>
+          <a href="#" class="list-group-item">Kudapan</a>
+          <a href="#" class="list-group-item">Hantaran</a>
+          <a href="#" class="list-group-item">Camilan</
+a>
+          <a href="#" class="list-group-item">Kue Kering</a>
+          <a href="#" class="list-group-item">Bolu &
+Mini Cake</a>
+          <a href="#" class="list-group-item">Aneka Roti</a>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3" v-for = "item in items">
+        <div class="thumbnail">
+          <h4 class="text-center"><span class="label label-info" style="background:rgb(56, 223, 108)">Kue Lebaran</span></h4>
+          <img v-bind:src="item.image" class="img-responsive">
+          <div class="caption">
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <h3>{{item.name}}</h3>
+              </div>
+              <div class="col-md-6 col-xs-6 price">
+                <h3>
+                <label>{{item.price}}</label></h3>
+              </div>
+            </div>
+            <p>{{item.description}}</p>
+            <div class="row">
+              <div class="col-md-6">
+                <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up">
+                </span> Like</a>
+              </div>
+              <div class="col-md-6">
+                <button type="text" href="#" @click="addToCart(item)" class="btn btn-success btn-product">
+                  <span class="glyphicon glyphicon-shopping-cart">
+                  </span> Buy</button></div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!--end div product-->
+
+      <div class ="row"`>
+      <div class="col-sm-6 col-md-3">
+        <h2>Product Terbaru</h2>
+          <div class="thumbnail">`
+            <div class="caption">
+              <div class="row">
+                <div class="catbox">
+                  <span>Kue Ulang Tahun</span>
+                <div class="col-sm-6 col-md-4">
+                  <img src="img/kueUltahku.jpg" alt="New Product">
+                </div>
+                <div class="catbox">
+                  <span>Kue Ulang Tahun</span>
+                <div class="col-sm-6 col-md-4">
+                  <img src="img/kueUltahku.jpg" alt="New Product">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <!--end div product terbaru -->
+
+  <!-- /.container class with content as the id-->
+    <footer id="myFooter">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3 myCols">
+            <h5>Get started</h5>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Sign up</a></li>
+              <li><a href="#">Downloads</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-3 myCols">
+            <h5>About us</h5>
+            <ul>
+              <li><a href="#">Company Information</a></li>
+              <li><a href="#">Contact us</a></li>
+              <li><a href="#">Reviews</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-3 myCols">
+            <h5>Support</h5>
+            <ul>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Help desk</a></li>
+              <li><a href="#">Forums</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-3 myCols">
+            <h5>Legal</h5>
+            <ul>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="social-networks">
+        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+        <a href="#" class="facebook"><i class="fa fa-facebook-official"></i></a>
+        <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+      </div>
+      <div class="footer-copyright">
+        <p>© 2016 Copyright Text </p>
+      </div>
+    </footer>
+</div>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      //message : 'tes vue js',
+      items: [],
+      showCart: false,
+      verified: false,
+      name:'',
+      description:'',
+      price: null,
+      category:'',
+      image: ''
+    },
+    methods: {
+      getItems: function() {
+        var self = this
+        axios.get('http://localhost:3000/items/')
+           .then(function(response) {
+            self.items = response.data
+            console.log(response);
+            // console.log(response.data);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      },
+      addItem: function() {
+        console.log('ini ada d addItem')
+        var self = this
+
+        axios.post('http://localhost:3000/items/', {
+          name:         self.name,
+          description:  self.description,
+          price:        self.price,
+          category:     self.category,
+          image:        self.image
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+      // addToCart(item) {
+      //   item.quantity += 1;
+      //   this.items.push(item);
+      // },
+      // removeFromCart(item) {
+      //   item.quantity -= 1;
+      //   this.items.splice(this.items.indexOf(item), 1);
+      // }
+    },
+    created: function() {
+      var self = this
+      self.getItems()
+    }
+
+  })
+</script>
+<script>
+  $(document).ready(function() {
+    $(".dropdown-toggle").dropdown();
+  });
+  $(document).ready(function() {
+
+    $('.btn-slide').click(function() {
+      $('#panel').slideToggle('slow');
+      $(this).toggleClass('active');
+      return false;
+    });
+
+  });
+</script>
+</body>
+
+</html>
